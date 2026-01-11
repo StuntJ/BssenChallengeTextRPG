@@ -32,7 +32,9 @@ class GameManager
     #endregion
 
     #region 프로퍼티
-    public Player? player { get; private set; }
+    public Player? Player { get; private set; }
+    //게임 실행 여부
+    public bool IsRunning { get; private set; } = true;
     #endregion
 
     #region 게임 시작 / 종료
@@ -45,6 +47,19 @@ class GameManager
 
         //캐릭터 생성
         CreateCharacter();
+
+        //메인 게임 루프
+        IsRunning = true;
+        while (IsRunning)
+        {
+            ShowMainMenu();
+        }
+        
+        //게임 종료 처리
+        if(!IsRunning)
+        {
+            ConsoleUI.ShowGameOver();
+        }
         //TODO: 인벤토리 초기화
         //TODO: 초기 아이템 지급
     }
@@ -94,7 +109,7 @@ class GameManager
             break;
         }
         //입력한 이름과 선택한 직업으로 플레이어 캐릭터 생성
-        player = new Player(name, job);
+        Player = new Player(name, job);
         Console.WriteLine($"\n{name}님, {job}직업으로 캐릭터가 생성되었습니다.");
 
         //테스트코드
@@ -103,7 +118,59 @@ class GameManager
         //Console.WriteLine($"Player ATK: {player.AttackPower}");
         //Console.WriteLine($"Player DEF: {player.Defense}");
 
-        player.DisplayInfo();
+        //player.DisplayInfo();
+        ConsoleUI.PressAnyKey();
+    }
+    #endregion
+
+    #region 메인 메뉴
+    public void ShowMainMenu()
+    {
+        Console.Clear();
+        Console.WriteLine("╔══════════════════════════════════════════╗");
+        Console.WriteLine("║             메인 메뉴                    ║");
+        Console.WriteLine("╚══════════════════════════════════════════╝\n");
+        Console.WriteLine("\n1. 상태 보기");
+        Console.WriteLine("2. 인벤토리");
+        Console.WriteLine("3. 상점");
+        Console.WriteLine("4. 던전 입장 (전투)");
+        Console.WriteLine("5. 휴식 (HP/MP 회복)");
+        Console.WriteLine("6. 저장");
+        Console.WriteLine("0. 게임 종료");
+
+        Console.Write("\n선택 (1-6): ");
+        string? input = Console.ReadLine();
+        switch (input)
+        {
+            case "1":
+                Player.DisplayInfo();
+                ConsoleUI.PressAnyKey();
+                break;
+            case "2":
+                //TODO: 인벤토리 기능 구현
+                break;
+            case "3":
+                //TODO: 상점 기능 구현
+                break;
+            case "4":
+                //TODO: 던전 입장 및 전투 기능 구현
+                break;
+            case "5":
+                //TODO: 휴식 기능 구현 
+                break;
+            case "6":
+                //TODO: 저장 기능 구현 
+                break;
+            case "0":
+                IsRunning = false;
+                Console.Write("\n게임을 종료합니다. 이용해주셔서 감사합니다!");
+                break;
+            default:
+                Console.WriteLine("\n잘못된 입력입니다. 다시 선택해주세요.");
+                ConsoleUI.PressAnyKey();
+                break;
+        }
+
     }
     #endregion
 }
