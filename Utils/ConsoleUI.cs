@@ -1,4 +1,5 @@
-﻿namespace TextRPG.Utils; 
+﻿using System;
+namespace TextRPG.Utils; 
 
 //콘솔 관련 UI 유틸리티를 담당하는 클래스 
 public class ConsoleUI

@@ -1,4 +1,5 @@
-﻿using TextRPG.Models;
+﻿using System;
+using TextRPG.Models;
 using TextRPG.Systems;
 using TextRPG.Utils;
 

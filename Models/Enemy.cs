@@ -1,4 +1,5 @@
-﻿namespace TextRPG.Models;
+﻿using System;
+namespace TextRPG.Models;
 public class Enemy : Character
 {
     #region 프로퍼티

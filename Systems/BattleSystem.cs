@@ -1,4 +1,5 @@
-﻿using TextRPG.Models;
+﻿using System;
+using TextRPG.Models;
 
 namespace TextRPG.Systems;
 
@@ -60,7 +61,18 @@ public class BattleSystem
                     Console.WriteLine($"{enemy.Name}의 남은 HP: {enemy.CurrentHp}/{enemy.MaxHp}");
                     break;
                 case "2":
-                    //스킬 사용
+                    //스킬 사용 전에 MP 체크
+                    if (player.CurrentMp < 15)
+                    {
+                        Console.WriteLine("MP가 부족합니다.");
+                        continue;
+                    }
+                    //스킬 발동
+                    int skillDamage = player.SkillAttack(enemy);
+                    Console.WriteLine($"{player.Name}의 스킬공격! {enemy.Name}에게 {skillDamage}의 피해를 입혔습니다.");
+                    Console.WriteLine($"{enemy.Name}의 남은 HP: {enemy.CurrentHp}/{enemy.MaxHp}");
+                    
+                    
                     break;
                 case "3":
                     //도망 시도
