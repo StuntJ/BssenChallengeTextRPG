@@ -41,7 +41,7 @@ public class BattleSystem
     private void PlayerTurn(Player player, Enemy enemy)
     {
         Console.WriteLine($"\n{player.Name}의 턴!");
-        Console.WriteLine($"HP: {player.CurrentHp}/{player.MaxMp} | MP: {player.CurrentMp}/{player.MaxMp}");
+        Console.WriteLine($"HP: {player.CurrentHp}/{player.MaxHp} | MP: {player.CurrentMp}/{player.MaxMp}");
         Console.WriteLine("\n행동을 선택하세요.");
         Console.WriteLine("1. 공격");
         Console.WriteLine("2. 스킬");
@@ -55,7 +55,9 @@ public class BattleSystem
             switch(input)
             {
                 case "1":
-                    //일반 공격
+                    int damage = player.Attack(enemy);
+                    Console.WriteLine($"{player.Name}의 공격! {enemy.Name}에게 {damage}의 피해를 입혔습니다.");
+                    Console.WriteLine($"{enemy.Name}의 남은 HP: {enemy.CurrentHp}/{enemy.MaxHp}");
                     break;
                 case "2":
                     //스킬 사용
