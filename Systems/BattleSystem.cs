@@ -98,9 +98,18 @@ public class BattleSystem
                     Console.WriteLine($"{enemy.Name}의 남은 HP: {enemy.CurrentHp}/{enemy.MaxHp}");
                     return true;
                 case "3":
-                    //도망 시도
-
-                    return false;
+                    //도망 시도 : (성공 확률 50%)
+                    Random random = new Random();
+                    if (random.NextDouble() < 0.5)
+                    {
+                        Console.WriteLine("\n도망에 성공했습니다!");
+                        return false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\n도망에 실패했습니다.");
+                        return true;
+                    }
                 default:
                     Console.WriteLine("잘못된 입력입니다. 다시 선택해주세요.");
                     break;
