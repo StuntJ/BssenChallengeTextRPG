@@ -11,21 +11,23 @@ public class Player : Character
     public JobType Job { get; private set; }
     //골드
     public int Gold { get; private set; }
-    //TODO: 장착 무기
-    //TODO: 장착 방어구
+    //장착 무기
+    public Equipment? EquipedWeapon { get; private set; }
+    //장착 방어구
+    public Equipment? EquipedArmor { get; private set; }
     #endregion
     #region 생성자
     public Player(string name, JobType job) : base(
-        name:name,
-        maxHp:GetInitHp(job),
-        maxMp:GetInitMp(job),
-        attackPower:GetInitAttack(job),
-        defense:GetInitDefense(job),
-        level:1)
+        name: name,
+        maxHp: GetInitHp(job),
+        maxMp: GetInitMp(job),
+        attackPower: GetInitAttack(job),
+        defense: GetInitDefense(job),
+        level: 1)
     {
         Job = job;
         Gold = 1000;
-       
+
     }
     #endregion
 
@@ -110,6 +112,55 @@ public class Player : Character
     {
         Gold += amount;
         Console.WriteLine($"골드 +{amount} 획득! 현재 골드: {Gold}");
+    }
+
+    //장비 착용 메서드
+    public void EquipItem(Equipment newEquipment)
+    {
+        Equipment? prevEquipment = null;
+        switch (newEquipment.Slot)
+        {
+            case EquipmentSlot.Weapon:
+                prevEquipment = EquipedWeapon;
+                EquipedWeapon = newEquipment;
+                break;
+            case EquipmentSlot.Armor:
+                prevEquipment = EquipedArmor;
+                EquipedArmor = newEquipment;
+                break;
+        }
+
+        //이전 장비 해제 메시지
+        if (prevEquipment != null)
+        {
+            Console.WriteLine($"{prevEquipment.Name} 장착 해제");
+        }
+        Console.WriteLine($"{newEquipment.Name} 장착 완료");
+    }
+
+    //장비 해제 메서드
+    public Equipment? UnequipItem(EquipmentSlot slot)
+    {
+        Equipment? equipment = null;
+        switch (slot)
+        {
+            case EquipmentSlot.Weapon:
+                equipment = EquipedWeapon;
+                EquipedWeapon = null;
+                break;
+            case EquipmentSlot.Armor:
+                equipment = EquipedArmor;
+                EquipedArmor = null;
+                break;
+
+        }
+
+        if(equipment != null)
+        {
+            Console.WriteLine($"{equipment.Name} 장착 해제");
+        }
+
+        return equipment;
     }
     #endregion
 }

@@ -62,6 +62,9 @@ class GameManager
         //캐릭터 생성
         CreateCharacter();
 
+        //테스트 코드
+        Player.TakeDamage(100);
+
         //인벤토리 초기화
         Inventory = new InventorySystem();
 
@@ -184,7 +187,7 @@ class GameManager
                 ConsoleUI.PressAnyKey();
                 break;
             case "2":
-                Inventory.ShowInventoryMenu();
+                Inventory.ShowInventoryMenu(Player);
                 break;
             case "3":
                 //TODO: 상점 기능 구현
