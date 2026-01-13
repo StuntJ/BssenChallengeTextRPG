@@ -60,6 +60,24 @@ public abstract class Character
         Console.WriteLine($"방어력: {Defense}");
         Console.WriteLine("=======================");
     }
+
+    //HP 회복 메서드
+    public int HealHp(int amount)
+    {
+        int beforeHp = CurrentHp;
+        //회복 후 현재 HP 최대 HP를 넘지 않도록
+        CurrentHp = Math.Min(CurrentHp + amount, MaxHp);
+        return CurrentHp - beforeHp; //실제로 회복된 HP양 반환
+    }
+
+    //MP 회복 메서드
+    public int HealMp(int amount)
+    {
+        int beforeMp = CurrentMp;
+        //회복 후 현재 MP 최대 MP를 넘지 않도록
+        CurrentMp = Math.Min(CurrentMp + amount, MaxMp);
+        return CurrentMp - beforeMp; //실제로 회복된 MP양 반환
+    }
     #endregion
 }
 
