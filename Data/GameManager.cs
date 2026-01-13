@@ -63,7 +63,7 @@ class GameManager
         CreateCharacter();
 
         //테스트 코드
-        Player.TakeDamage(100);
+        //Player.TakeDamage(100);
 
         //인벤토리 초기화
         Inventory = new InventorySystem();
