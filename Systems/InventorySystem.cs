@@ -142,12 +142,12 @@ public class InventorySystem
             if (Console.ReadLine()?.ToLower() == "y")
             {
                 RemoveItem(item);
-            }
-            else if (index != 0)
-            {
-                Console.WriteLine("잘못된 선택입니다.");
-                ConsoleUI.PressAnyKey();
-            }
+            }   
+        }
+        else if (index != 0)
+        {
+            Console.WriteLine("잘못된 선택입니다.");
+            ConsoleUI.PressAnyKey();
         }
     }
     #endregion
