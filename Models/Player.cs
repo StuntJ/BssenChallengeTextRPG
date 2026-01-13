@@ -77,9 +77,32 @@ public class Player : Character
     //플레이어 정보 출력(오버라이드)
     public override void DisplayInfo()
     {
-        base.DisplayInfo();
+        //base.DisplayInfo();
+        Console.Clear();
+        Console.WriteLine($"===== {Name} 정보 =====");
+        Console.WriteLine($"레벨: {Level}");
+        Console.WriteLine($"HP: {CurrentHp}/{MaxHp}");
+        Console.WriteLine($"MP: {CurrentMp}/{MaxMp}");
+        int attackBonus = (EquipedWeapon != null) ? EquipedWeapon.AttackBonus : 0;
+        int defenseBonus = (EquipedArmor != null) ? EquipedArmor.DefenseBonus : 0;
+        Console.WriteLine($"ATK: {AttackPower} (+{attackBonus})");
+        Console.WriteLine($"DEF: {Defense} (+{defenseBonus})");
         Console.WriteLine($"골드: {Gold}");
 
+        //장착 아이템 목록
+        if(EquipedWeapon !=null || EquipedArmor != null)
+        {
+            Console.WriteLine("\n[장착 중인 장비 목록]");
+            if(EquipedWeapon != null)
+            {
+                Console.WriteLine($"무기: {EquipedWeapon.Name}");
+            }
+
+            if(EquipedArmor != null)
+            {
+                Console.WriteLine($"방어구: {EquipedArmor.Name}");
+            }
+        }
     }
 
     //기본 공격 메서드 (override)

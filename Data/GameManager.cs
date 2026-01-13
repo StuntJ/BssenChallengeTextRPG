@@ -150,13 +150,19 @@ class GameManager
     private void SetupInitItems()
     {
         //기본 장비 
-        Inventory.AddItem(Equipment.CreateWeapon("목검"));
-        Inventory.AddItem(Equipment.CreateArmor("천갑옷"));
+        var weapon = Equipment.CreateWeapon("목검");
+        var armor = Equipment.CreateArmor("천갑옷");
+        Inventory.AddItem(weapon);
+        Inventory.AddItem(armor);   
 
         //포션 지급
         Inventory.AddItem(Consumable.CreatePotion("체력포션"));
         Inventory.AddItem(Consumable.CreatePotion("체력포션"));
         Inventory.AddItem(Consumable.CreatePotion("마나포션"));
+
+        //기본 장비 착용
+        Player.EquipItem(weapon);
+        Player.EquipItem(armor);
 
         Console.WriteLine("\n초기 장비가 지급되었습니다.");
         ConsoleUI.PressAnyKey();
