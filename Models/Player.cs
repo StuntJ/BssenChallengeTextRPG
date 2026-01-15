@@ -108,8 +108,15 @@ public class Player : Character
     //기본 공격 메서드 (override)
     public override int Attack(Character target)
     {
-        //TODO: 장착무기 또는 방어구에 따른 추가 데미지 계산
+        //장착무기 또는 방어구에 따른 추가 데미지 계산
+        //null 병합 연산자 : ?? 
         int attackDamage = AttackPower;
+        attackDamage += EquipedWeapon?.AttackBonus ?? 0;
+
+        //if (EquipedWeapon != null)
+        //{
+        //    attackDamage += EquipedWeapon.AttackBonus;
+        //}
 
         return target.TakeDamage(attackDamage);
     }
@@ -121,6 +128,7 @@ public class Player : Character
 
         //스킬 공격 = 기본 공격의 1.5배 데미지
         int totalDamage = AttackPower;
+        totalDamage += EquipedWeapon?.AttackBonus ?? 0;
         totalDamage = (int)(totalDamage * 1.5f);
 
         //MP 소모
