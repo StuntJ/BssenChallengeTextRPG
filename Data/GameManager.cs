@@ -32,6 +32,8 @@ class GameManager
 
         //전투 시스템 초기화
         BattleSystem = new BattleSystem();
+        //상점 시스템 초기화
+        ShopSystem = new ShopSystem();  
     }
 
     #endregion
@@ -46,6 +48,9 @@ class GameManager
 
     //인벤토리 시스템
     public InventorySystem Inventory { get; private set; }
+
+    //상점 시스템
+    public ShopSystem ShopSystem { get; private set; }
 
     //게임 실행 여부
     public bool IsRunning { get; private set; } = true;
@@ -83,8 +88,6 @@ class GameManager
         {
             ConsoleUI.ShowGameOver();
         }
-        //TODO: 인벤토리 초기화
-        //TODO: 초기 아이템 지급
     }
     #endregion
 
@@ -196,7 +199,7 @@ class GameManager
                 Inventory.ShowInventoryMenu(Player);
                 break;
             case "3":
-                //TODO: 상점 기능 구현
+                ShopSystem.ShowShopMenu(Player,Inventory);
                 break;
             case "4":
                 EnterDungeon();
