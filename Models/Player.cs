@@ -169,6 +169,15 @@ public class Player : Character
         Console.WriteLine($"{newEquipment.Name} 장착 완료");
     }
 
+    //골드 차감 메서드
+    public void SpendGold(int amount)
+    {
+        if (Gold >= amount)
+        {
+            Gold -= amount;
+        }
+    }
+
     //장비 해제 메서드
     public Equipment? UnequipItem(EquipmentSlot slot)
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using TextRPG.Models;
 using TextRPG.Utils;
 
@@ -64,7 +65,8 @@ public class ShopSystem
             switch (input)
             {
                 case "1":
-                    //TODO: 구매 메서드
+                    //구매 메서드
+                    BuyItem(player, inventory);
                     break;
                 case "2":
                     //TODO: 판매 메서드
@@ -80,6 +82,81 @@ public class ShopSystem
 
             }
         }
+    }
+    #endregion
+
+    #region 구매 메서드
+    private void BuyItem(Player player, InventorySystem inventory)
+    {
+        //구매 가능한 아이템 목록
+        Console.Clear();
+        Console.WriteLine("\n[구매 가능한 아이템]");
+
+        for(int i = 0; i < ShopItems.Count; i++)
+        {
+            Console.Write($"[{i + 1}] ");
+            ShopItems[i].DisplayInfo();
+        }
+
+        Console.Write("\n구매할 아이템 번호를 선택하세요. (0:취소)> ");
+
+        if(int.TryParse(Console.ReadLine(), out var index) && 0 < index && index <= ShopItems.Count)
+        {
+            Item selectedItem = ShopItems[index-1];
+
+            //골드가 충분한지 확인
+            if (player.Gold >= selectedItem.Price)
+            {
+                Console.Write($"{selectedItem.Name}을 {selectedItem.Price}골드로 구매하시겠습니까? (y/n): ");
+                if(Console.ReadLine()?.ToLower() == "y")
+                {
+                    //골드를 차감
+                    player.SpendGold(selectedItem.Price);
+                    //구매한 아이템의 인스턴스 생성
+                    Item? item = CreateItem(selectedItem);
+                    //아이템 장착 또는 인벤토리에 추가
+                    if (item is Equipment equipment)
+                    {
+                        inventory.AddItem(equipment);
+                        player.EquipItem(equipment);
+                    }
+                    else if (item is Consumable consumable)
+                    {
+                        inventory.AddItem(consumable);
+                    }
+
+                    Console.WriteLine($"{selectedItem.Name}을 구매했습니다.");
+                    ConsoleUI.PressAnyKey();
+                }
+
+
+
+            }
+            else
+            {
+                Console.WriteLine("\n골드가 부족합니다.");
+                ConsoleUI.PressAnyKey();
+            }
+        }
+    }
+    #endregion
+
+    #region 아이템 복제 메서드
+    private Item? CreateItem(Item item)
+    {
+        //장착 아이템
+        if (item is Equipment equipment)
+        {
+            var newItem = new Equipment(equipment.Name, equipment.Description, equipment.Price, equipment.Slot, equipment.AttackBonus, equipment.DefenseBonus);
+            return newItem;
+        }
+        //소모성 아이템
+        else if (item is Consumable consumable)
+        {
+            return new Consumable(consumable.Name, consumable.Description, consumable.Price, consumable.HpAmount, consumable.MpAmount); 
+        }
+
+        return null;
     }
     #endregion
 }
