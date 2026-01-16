@@ -18,14 +18,14 @@ class GameManager
         get
         {
             //인스턴스가 없으면 새로 생성
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new GameManager();
             }
             return instance;
         }
     }
-    
+
     private GameManager()
     {
         //클래스가 생성될 때 초기화 작업 수행
@@ -33,7 +33,7 @@ class GameManager
         //전투 시스템 초기화
         BattleSystem = new BattleSystem();
         //상점 시스템 초기화
-        ShopSystem = new ShopSystem();  
+        ShopSystem = new ShopSystem();
     }
 
     #endregion
@@ -82,9 +82,9 @@ class GameManager
         {
             ShowMainMenu();
         }
-        
+
         //게임 종료 처리
-        if(!IsRunning)
+        if (!IsRunning)
         {
             ConsoleUI.ShowGameOver();
         }
@@ -156,7 +156,7 @@ class GameManager
         var weapon = Equipment.CreateWeapon("목검");
         var armor = Equipment.CreateArmor("천갑옷");
         Inventory.AddItem(weapon);
-        Inventory.AddItem(armor);   
+        Inventory.AddItem(armor);
 
         //포션 지급
         Inventory.AddItem(Consumable.CreatePotion("체력포션"));
@@ -199,13 +199,13 @@ class GameManager
                 Inventory.ShowInventoryMenu(Player);
                 break;
             case "3":
-                ShopSystem.ShowShopMenu(Player,Inventory);
+                ShopSystem.ShowShopMenu(Player, Inventory);
                 break;
             case "4":
                 EnterDungeon();
                 break;
             case "5":
-                //TODO: 휴식 기능 구현 
+                rest();
                 break;
             case "6":
                 //TODO: 저장 기능 구현 
@@ -240,6 +240,33 @@ class GameManager
 
         Console.WriteLine("\n던전 탐험을 마치고 마을로 돌아갑니다...");
         ConsoleUI.PressAnyKey();
+    }
+
+    // 휴식 (HP/MP) 회복
+    private void rest()
+    {
+        //상수(Constant)
+        const int restCost = 50;
+
+        Console.Clear();
+        Console.WriteLine("\n여관에서 휴식을 취합니다...");
+        Console.WriteLine($"\n비용: {restCost}골드");
+        if (Player.Gold < restCost)
+        {
+            Console.WriteLine("\n골드가 부족합니다.");
+            ConsoleUI.PressAnyKey();
+            return;
+        }
+
+        Console.Write("\n휴식을 취하겠습니까? (y/n): ");
+        if (Console.ReadLine()?.ToLower() == "y")
+        {
+            Player.SpendGold(restCost);
+            Player.HealHp(Player.MaxHp);
+            Player.HealMp(Player.MaxMp);
+            Console.WriteLine("\n휴식을 취했습니다. HP와 MP모두 회복되었습니다.");
+            ConsoleUI.PressAnyKey();
+        }
     }
     #endregion
 }
