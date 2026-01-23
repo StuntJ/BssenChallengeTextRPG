@@ -196,19 +196,24 @@ class GameManager
                 ConsoleUI.PressAnyKey();
                 break;
             case "2":
+                //인벤토리 기능 구현
                 Inventory.ShowInventoryMenu(Player);
                 break;
             case "3":
+                //상점 기능 구현
                 ShopSystem.ShowShopMenu(Player, Inventory);
                 break;
             case "4":
+                //던전 입장 및 전투 기능 구현
                 EnterDungeon();
                 break;
             case "5":
+                //휴식 기능 구현
                 rest();
                 break;
-            case "6":
-                //TODO: 저장 기능 구현 
+            case "6":   
+                //저장 기능 구현
+                SaveGame();            
                 break;
             case "0":
                 IsRunning = false;
@@ -265,6 +270,24 @@ class GameManager
             Player.HealHp(Player.MaxHp);
             Player.HealMp(Player.MaxMp);
             Console.WriteLine("\n휴식을 취했습니다. HP와 MP모두 회복되었습니다.");
+            ConsoleUI.PressAnyKey();
+        }
+    }
+    #endregion
+
+    #region 저장 기능
+    public void SaveGame()
+    {
+        if(Player==null || Inventory == null)
+        {
+            Console.WriteLine("\n저장할 게임 데이터가 없습니다.");
+            ConsoleUI.PressAnyKey();
+            return;
+        }
+
+        if(SaveLoadSystem.SaveGame(Player, Inventory))
+        {
+            Console.WriteLine("\n정상적으로 게임이 저장되었습니다.");
             ConsoleUI.PressAnyKey();
         }
     }
